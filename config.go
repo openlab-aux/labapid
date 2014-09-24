@@ -4,8 +4,8 @@ import "io/ioutil"
 import "encoding/json"
 
 type config struct {
-	JSONPath  string
-	APITokens map[string]string
+	JSONPath  string            `json:"jsonpath"`
+	APITokens map[string]string `json:"apitokens"`
 }
 
 func loadConfig(filename string) (config, error) {

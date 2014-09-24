@@ -8,6 +8,7 @@ import "net/http"
 import "github.com/waaaaargh/gospaceapi"
 
 var s spaceapi.SpaceAPI
+var c config
 
 func loadSpaceAPIData(filename string) (spaceapi.SpaceAPI, error) {
 	bytes, err := ioutil.ReadFile(filename)
@@ -36,7 +37,8 @@ func saveSpaceAPIData(s *spaceapi.SpaceAPI, filename string) error {
 }
 
 func main() {
-	conf, err := loadConfig("spaceapi.json.conf")
+	var err error
+	c, err = loadConfig("spaceapi.json.conf")
 	if err != nil {
 		fmt.Println("[!] Error loading config at 'spaceapi.json.conf': " + err.Error())
 		os.Exit(1)
@@ -44,13 +46,15 @@ func main() {
 		fmt.Println("[i] Config loaded successfully")
 	}
 
-	s, err = loadSpaceAPIData(conf.JSONPath)
+	s, err = loadSpaceAPIData(c.JSONPath)
 	if err != nil {
 		fmt.Println("[!] Error reading SpaceAPI Data: " + err.Error())
 		os.Exit(1)
 	}
 
 	http.HandleFunc("/", showSpaceAPIHandler)
+	http.HandleFunc("/edit/door/", changeDoorStatusHandler)
+
 	err = http.ListenAndServe(":5000", nil)
 	if err != nil {
 		fmt.Println("[!] Could not start HTTP Server: " + err.Error())
