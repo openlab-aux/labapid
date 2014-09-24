@@ -1,20 +1,29 @@
 {
     "api": "0.13",
-    "space": "Slopspace",
-    "logo": "http://your-space.org/img/logo.png",
-    "url": "http://your-space.org",
+    "space": "OpenLab",
+    "logo": "http://i.imgur.com/4v7PKZm.png",
+    "url": "http://openlab-augsburg.de",
     "location": {
-        "address": "Ulmer Strasse 255, 70327 Stuttgart, Germany",
-        "lon": 9.236,
-        "lat": 48.777
+        "address": "Elisenstr. 1, 86159 Augsburg, Germany",
+        "lon": 10.8867969,
+        "lat": 48.3577121
     },
     "contact": {
-        "twitter": "@spaceapi"
+        "twitter": "@OpenLabAugsburg",
+        "phone": "+49 821 600 807 23"
+        "irc": "irc://irc.freenode.org/#augsburg"
+        "facebook": "https://www.facebook.com/openlab.augsburg"
+        "email": "kontakt@openlab-augsburg.de"
+        "ml": "alle@lists.openlab-augsburg.de"
     },
     "issue_report_channels": [
-        "twitter"
+        "twitter",
+        "email"
     ],
     "state": {
         "open": true
-    }
+    },
+    "projects": [
+        "https://github.com/openlab-aux/"
+    ]
 }
