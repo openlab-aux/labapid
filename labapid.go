@@ -54,6 +54,7 @@ func main() {
 
 	http.HandleFunc("/", showSpaceAPIHandler)
 	http.HandleFunc("/edit/door/", changeDoorStatusHandler)
+	http.HandleFunc("/edit/sensor/", changeSensorStatusHandler)
 
 	err = http.ListenAndServe(":5000", nil)
 	if err != nil {
