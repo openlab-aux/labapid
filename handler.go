@@ -14,42 +14,31 @@ func showSpaceAPIHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func changeDoorStatusHandler(w http.ResponseWriter, r *http.Request) {
+	type doorstatus struct {
+		Token  string
+		Status bool
+	}
+
 	decoder := json.NewDecoder(r.Body)
 	defer r.Body.Close()
-	var t interface{}
+	t := doorstatus{}
 
 	err := decoder.Decode(&t)
 	if err != nil {
-		http.Error(w, "{\"success\":false}", 400)
+		http.Error(w, "{\"success\":false, \"reason\": \""+err.Error()+"\"}", 400)
 		return
 	}
 
-	status, ok := t.(map[string]interface{})["status"].(string)
-	token, ok := t.(map[string]interface{})["token"].(string)
-
-	if !ok {
-		http.Error(w, "{\"success\":false}", 400)
-		return
-	}
-
-	if !tokenOk(token, c.APITokens) {
+	if !tokenOk(t.Token, c.APITokens) {
 		http.Error(w, "{\"success\":false}", 403)
+		return
 	}
 
-	var status_bool bool
-
-	if status == "true" {
-		status_bool = true
-	} else {
-		status_bool = false
-	}
-
-	s.State.Open = status_bool
+	s.State.Open = t.Status
 
 	saveSpaceAPIData(&s, c.JSONPath)
 
 	fmt.Fprintf(w, "{\"success\":true}")
-
 }
 
 func changeSensorStatusHandler(w http.ResponseWriter, r *http.Request) {
