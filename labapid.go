@@ -1,6 +1,6 @@
 package main
 
-import "fmt"
+import "./logging"
 import "os"
 import "io/ioutil"
 import "encoding/json"
@@ -9,6 +9,7 @@ import "github.com/waaaaargh/gospaceapi"
 
 var s spaceapi.SpaceAPI
 var c config
+var l *logging.Logger
 
 func loadSpaceAPIData(filename string) (spaceapi.SpaceAPI, error) {
 	bytes, err := ioutil.ReadFile(filename)
@@ -37,18 +38,20 @@ func saveSpaceAPIData(s *spaceapi.SpaceAPI, filename string) error {
 }
 
 func main() {
+	l = logging.New(logging.INFO, "[labapid] [%s] %s\n", os.Stdout)
+
 	var err error
 	c, err = loadConfig("spaceapi.json.conf")
 	if err != nil {
-		fmt.Println("[!] Error loading config at 'spaceapi.json.conf': " + err.Error())
+		l.Info("[!] Error loading config at 'spaceapi.json.conf': " + err.Error())
 		os.Exit(1)
 	} else {
-		fmt.Println("[i] Config loaded successfully")
+		l.Debug("Config loaded successfully")
 	}
 
 	s, err = loadSpaceAPIData(c.JSONPath)
 	if err != nil {
-		fmt.Println("[!] Error reading SpaceAPI Data: " + err.Error())
+		l.Critical("[!] Error reading SpaceAPI Data: " + err.Error())
 		os.Exit(1)
 	}
 
@@ -56,10 +59,10 @@ func main() {
 	http.HandleFunc("/edit/door/", changeDoorStatusHandler)
 	http.HandleFunc("/edit/sensor/", changeSensorStatusHandler)
 
-	err = http.ListenAndServe(":5000", nil)
+	err = http.ListenAndServe(c.ListenAddress, nil)
 	if err != nil {
-		fmt.Println("[!] Could not start HTTP Server: " + err.Error())
+		l.Critical("[!] Could not start HTTP Server: " + err.Error())
 	} else {
-		fmt.Println("[i] Starting HTTP Server, waiting for requests")
+		l.Info("[i] Starting HTTP Server, waiting for requests")
 	}
 }
