@@ -42,38 +42,42 @@ func changeDoorStatusHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func changeSensorStatusHandler(w http.ResponseWriter, r *http.Request) {
+	type sensordata struct {
+		Token  string
+		Sensor map[string]interface{}
+	}
+
 	decoder := json.NewDecoder(r.Body)
 	defer r.Body.Close()
-	var t interface{}
+	t := sensordata{}
 
 	err := decoder.Decode(&t)
+
 	if err != nil {
 		http.Error(w, "{\"success\":false}", 400)
+		l.Error(err.Error())
 		return
 	}
 
-	sensor, ok := t.(map[string]interface{})["sensor"].(map[string]interface{})
-	token, ok := t.(map[string]interface{})["token"].(string)
-
-	if !ok {
-		http.Error(w, "{\"success\":false}", 400)
-		return
-	}
-
-	if !tokenOk(token, c.APITokens) {
+	if !tokenOk(t.Token, c.APITokens) {
 		http.Error(w, "{\"success\":false}", 403)
 	}
 
 	// extract sensor name
+	if len(t.Sensor) != 1 {
+		http.Error(w, "{\"success\":false}", 400)
+		l.Error(err.Error())
+		return
+	}
 	var sensorname string
-	for k, _ := range sensor {
+	for k, _ := range t.Sensor {
 		sensorname = k
 	}
 
 	if s.Sensors == nil {
 		s.Sensors = map[string]interface{}{}
 	}
-	s.Sensors[sensorname] = sensor[sensorname]
+	s.Sensors[sensorname] = t.Sensor[sensorname]
 
 	saveSpaceAPIData(&s, c.JSONPath)
 
