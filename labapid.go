@@ -43,7 +43,7 @@ func main() {
 	var err error
 	c, err = loadConfig("spaceapi.json.conf")
 	if err != nil {
-		l.Info("[!] Error loading config at 'spaceapi.json.conf': " + err.Error())
+		l.Critical("[!] Error loading config at 'spaceapi.json.conf': " + err.Error())
 		os.Exit(1)
 	} else {
 		l.Debug("Config loaded successfully")
