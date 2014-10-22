@@ -11,6 +11,12 @@ var s spaceapi.SpaceAPI
 var c config
 var l *logging.Logger
 
+// Global runtime data
+var runtime struct {
+	lastDoorState bool
+	init          bool
+}
+
 func loadSpaceAPIData(filename string) (spaceapi.SpaceAPI, error) {
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -39,6 +45,8 @@ func saveSpaceAPIData(s *spaceapi.SpaceAPI, filename string) error {
 
 func main() {
 	l = logging.New(logging.INFO, "[labapid] [%s] %s\n", os.Stdout)
+
+	runtime.init = true
 
 	var err error
 	c, err = loadConfig("spaceapi.json.conf")

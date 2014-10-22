@@ -1,8 +1,12 @@
 package main
 
-import "fmt"
-import "encoding/json"
-import "net/http"
+import (
+	"fmt"
+	"time"
+
+	"encoding/json"
+	"net/http"
+)
 
 func showSpaceAPIHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -34,9 +38,13 @@ func changeDoorStatusHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s.State.Open = t.Status
-
-	saveSpaceAPIData(&s, c.JSONPath)
+	if t.Status != runtime.lastDoorState || runtime.init {
+		s.State.Open = t.Status
+		s.State.Lastchange = int32(time.Now().Unix())
+		saveSpaceAPIData(&s, c.JSONPath)
+		runtime.lastDoorState = t.Status
+		runtime.init = false
+	}
 
 	fmt.Fprintf(w, "{\"success\":true}")
 }
