@@ -6,7 +6,7 @@ import (
 )
 
 type config struct {
-	SphincterTimeout int               `json:"timeout"`
+	SphincterTimeout int               `json:"sphincter_timeout"`
 	JSONPath         string            `json:"jsonpath"`
 	APITokens        map[string]string `json:"apitokens"`
 	ListenAddress    string            `json:"listenaddress"`

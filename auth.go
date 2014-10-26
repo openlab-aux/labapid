@@ -1,6 +1,11 @@
 package main
 
 func tokenOk(token string, acl map[string]string) bool {
-	_, ok := acl[token]
-	return ok
+
+	for _, v := range acl {
+		if v == token {
+			return true
+		}
+	}
+	return false
 }

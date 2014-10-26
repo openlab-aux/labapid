@@ -6,6 +6,8 @@ import (
 
 	"encoding/json"
 	"net/http"
+
+	"github.com/waaaaargh/gospaceapi"
 )
 
 func showSpaceAPIHandler(w http.ResponseWriter, r *http.Request) {
@@ -13,7 +15,7 @@ func showSpaceAPIHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	if time.Now().Sub(runtime.lastSphincterCall).Minutes() > float64(c.SphincterTimeout) {
-		s.State.Open = gospaceapi.Unknown
+		s.State.Open = spaceapi.Unknown
 	}
 
 	json, _ := s.ToJSON()
@@ -46,9 +48,9 @@ func changeDoorStatusHandler(w http.ResponseWriter, r *http.Request) {
 
 	if t.Status != runtime.lastDoorState || runtime.init {
 		if t.Status {
-			s.State.Open = gospaceapi.True
+			s.State.Open = spaceapi.True
 		} else {
-			s.State.Open = gospaceapi.False
+			s.State.Open = spaceapi.False
 		}
 		s.State.Lastchange = time.Now().Unix()
 		saveSpaceAPIData(&s, c.JSONPath)
