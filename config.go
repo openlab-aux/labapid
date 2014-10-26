@@ -1,7 +1,9 @@
 package main
 
-import "io/ioutil"
-import "encoding/json"
+import (
+	"encoding/json"
+	"io/ioutil"
+)
 
 type config struct {
 	JSONPath      string            `json:"jsonpath"`

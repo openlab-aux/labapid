@@ -1,11 +1,14 @@
 package main
 
-import "./logging"
-import "os"
-import "io/ioutil"
-import "encoding/json"
-import "net/http"
-import "github.com/waaaaargh/gospaceapi"
+import (
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
+	"os"
+
+	"./logging"
+	"github.com/waaaaargh/gospaceapi"
+)
 
 var s spaceapi.SpaceAPI
 var c config
