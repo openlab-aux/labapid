@@ -6,9 +6,10 @@ import (
 )
 
 type config struct {
-	JSONPath      string            `json:"jsonpath"`
-	APITokens     map[string]string `json:"apitokens"`
-	ListenAddress string            `json:"listenaddress"`
+	SphincterTimeout int               `json:"timeout"`
+	JSONPath         string            `json:"jsonpath"`
+	APITokens        map[string]string `json:"apitokens"`
+	ListenAddress    string            `json:"listenaddress"`
 }
 
 func loadConfig(filename string) (config, error) {

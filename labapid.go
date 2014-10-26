@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"time"
 
 	"./logging"
 	"github.com/waaaaargh/gospaceapi"
@@ -16,8 +17,9 @@ var l *logging.Logger
 
 // Global runtime data
 var runtime struct {
-	lastDoorState bool
-	init          bool
+	lastDoorState     bool
+	lastSphincterCall time.Time
+	init              bool
 }
 
 func loadSpaceAPIData(filename string) (spaceapi.SpaceAPI, error) {

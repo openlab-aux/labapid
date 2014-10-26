@@ -12,6 +12,10 @@ func showSpaceAPIHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
+	if time.Now().Sub(runtime.lastSphincterCall).Minutes() > float64(c.SphincterTimeout) {
+		s.State.Open = gospaceapi.Unknown
+	}
+
 	json, _ := s.ToJSON()
 
 	fmt.Fprintf(w, json)
@@ -38,9 +42,15 @@ func changeDoorStatusHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	runtime.lastSphincterCall = time.Now()
+
 	if t.Status != runtime.lastDoorState || runtime.init {
-		s.State.Open = t.Status
-		s.State.Lastchange = int32(time.Now().Unix())
+		if t.Status {
+			s.State.Open = gospaceapi.True
+		} else {
+			s.State.Open = gospaceapi.False
+		}
+		s.State.Lastchange = time.Now().Unix()
 		saveSpaceAPIData(&s, c.JSONPath)
 		runtime.lastDoorState = t.Status
 		runtime.init = false
