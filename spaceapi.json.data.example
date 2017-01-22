@@ -35,5 +35,6 @@
                "type": "rss",
                "url": "https://openlab-augsburg.de/feed/"
            }
-    }
+    },
+    "ext_ccc": "family"
 }
