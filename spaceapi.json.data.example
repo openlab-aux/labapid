@@ -1,8 +1,8 @@
 {
     "api": "0.13",
-    "space": "OpenLab",
-    "logo": "http://i.imgur.com/4v7PKZm.png",
-    "url": "http://openlab-augsburg.de",
+    "space": "OpenLab Augsburg",
+    "logo": "https://api.openlab-augsburg.de/static/logo_400px.png",
+    "url": "https://openlab-augsburg.de",
     "location": {
         "address": "Elisenstr. 1, 86159 Augsburg, Germany",
         "lon": 10.8867969,
@@ -33,7 +33,7 @@
            },
            "blog": {
                "type": "rss",
-               "url": "http://openlab-augsburg.de/feed/"
+               "url": "https://openlab-augsburg.de/feed/"
            }
     }
 }
