@@ -10,10 +10,10 @@
     },
     "contact": {
         "twitter": "@OpenLabAugsburg",
-        "phone": "+49 821 600 807 23"
-        "irc": "irc://irc.freenode.org/#augsburg"
-        "facebook": "https://www.facebook.com/openlab.augsburg"
-        "email": "kontakt@openlab-augsburg.de"
+        "phone": "+49 821 600 807 23",
+        "irc": "irc://irc.freenode.org/#augsburg",
+        "facebook": "https://www.facebook.com/openlab.augsburg",
+        "email": "kontakt@openlab-augsburg.de",
         "ml": "alle@lists.openlab-augsburg.de"
     },
     "issue_report_channels": [
@@ -25,5 +25,15 @@
     },
     "projects": [
         "https://github.com/openlab-aux/"
-    ]
+    ],
+    "feeds": {
+         "calendar": {
+             "type": "icalendar",
+             "url": "https://openlab-augsburg.de/veranstaltungen/events.ics"
+           },
+           "blog": {
+               "type": "rss",
+               "url": "http://openlab-augsburg.de/feed/"
+           }
+    }
 }
